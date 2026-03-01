@@ -848,16 +848,16 @@ emit("[A]<B")
 
 # Setup constant output tables
 comment("Output gating tables")
-# mem[700]=0 (already 0), mem[701]=variable (set per char)
-# mem[710]=0, mem[711]=45 ('-')
-# mem[720]=0, mem[721]=62 ('>')
-# mem[730]=0, mem[731]=10 ('\n')
+# mem[60]=0 (already 0), mem[61]=variable (set per char)
+# mem[70]=0, mem[71]=45 ('-')
+# mem[80]=0, mem[81]=62 ('>')
+# mem[90]=0, mem[91]=10 ('\n')
 emit("B<45")
-emit("[711]<B")
+emit("[71]<B")
 emit("B<62")
-emit("[721]<B")
+emit("[81]<B")
 emit("B<10")
-emit("[731]<B")
+emit("[91]<B")
 
 comment("")
 
@@ -880,15 +880,15 @@ for n in range(1, 11):
         s = src_char_map[src]
         d = src_char_map[dst]
 
-        # Optimize: skip [701] store if same as previous
-        if s != prev_dst:  # prev_dst because [701] was last set to dst
-            emit(f"[701]<{s}")
-        emit("O<[F+700]")
-        emit("O<[F+710]")
-        emit("O<[F+720]")
-        emit(f"[701]<{d}")
-        emit("O<[F+700]")
-        emit("O<[F+730]")
+        # Optimize: skip [61] store if same as previous
+        if s != prev_dst:  # prev_dst because [61] was last set to dst
+            emit(f"[61]<{s}")
+        emit("O<[F+60]")
+        emit("O<[F+70]")
+        emit("O<[F+80]")
+        emit(f"[61]<{d}")
+        emit("O<[F+60]")
+        emit("O<[F+90]")
 
         prev_src = s
         prev_dst = d

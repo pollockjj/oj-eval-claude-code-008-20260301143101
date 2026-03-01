@@ -1,17 +1,9 @@
-# Read two chars into A and B
 A<I
 B<I
-# Set mem[A] = 1
 C<1
 [A]<C
-# Read mem[B] into D. If A==B, D=1; else D=0
 D<[B]
-# Now use D as index: mem[256]=48('0'), mem[257]=49('1')
-# Store lookup values
-E<48
-[256]<E
-E<49
-[257]<E
-# Output mem[D+256]
+[256]<48
+[257]<49
 O<[D+256]
 Z<1
