@@ -1,32 +1,16 @@
-# === Problem 2282: Sort 5 digits (compact v3) ===
-A<[65]
-[66]<48
-[67]<R
-R<[A+66]
-[68]<5
-[69]<S
-S<[A+68]
-[65]<1
-# Increment table: mem[200+k]=k+1 for k=0..5
+# === Problem 2282: Sort 5 digits (optimized v3) ===
+# Counting sort: count digits, then sweep 0-9 outputting each count times
+# 
+# Increment table: mem[200+k]=k+1 for k=0..4
 [200]<1
 [201]<2
 [202]<3
 [203]<4
 [204]<5
-[205]<6
-# Decrement table: mem[210+k]=k-1 for k=1..5
-[211]<0
-[212]<1
-[213]<2
-[214]<3
-[215]<4
-# Nonzero flag: mem[220+k]=1 for k=1..5
-[221]<1
-[222]<1
-[223]<1
-[224]<1
-[225]<1
-# Advance table: mem[300+d]=d+1 for d=48..57
+# Is-zero table: mem[230]=1 (F=1 when count=0, F=0 when count>0)
+[230]<1
+# Advance table: mem[300+R]=R+1 for digits, plus init shortcut
+[300]<48
 [348]<49
 [349]<50
 [350]<51
@@ -37,8 +21,9 @@ S<[A+68]
 [355]<56
 [356]<57
 [357]<58
-[310]<1
-# Read 5 digits
+# Halt flag: mem[458]=1 (triggers Z=1 when R=58, past digit '9')
+[458]<1
+# Read 5 digits into count array at mem[48..57]
 A<I
 B<[A]
 [A]<[B+200]
@@ -54,18 +39,15 @@ B<[A]
 A<I
 B<[A]
 [A]<[B+200]
-# Output loop
+# Output loop: sweep digits, output each count[R] times
+# F=0 means count>0 (output R, stay). F=1 means count=0 (suppress, advance).
 C<[R]
-F<[C+220]
-[281]<R
+F<[C+230]
+[280]<R
 O<[F+280]
-[R]<[C+210]
+[R]<[C+198]
 E<[R+300]
-[290]<E
-[291]<R
+[290]<R
+[291]<E
 R<[F+290]
-K<[S+210]
-[292]<S
-[293]<K
-S<[F+292]
-Z<[S+310]
+Z<[R+400]
